@@ -1,6 +1,15 @@
 # @barfinex/types
 
-**@barfinex/types** is a collection of shared TypeScript interfaces and enums used across the [Barfinex](https://barfinex.com) ecosystem — an open-source platform for algorithmic trading and digital asset infrastructure.
+**`@barfinex/types`** is the **foundational contract layer** of the [Barfinex](https://barfinex.com) ecosystem — an open-source platform for algorithmic trading, quantitative research, and digital asset infrastructure.
+
+This package consolidates **shared TypeScript interfaces, models, and enums** that describe the **core entities of trading systems**: accounts, orders, positions, markets, connectors, and signals. By centralizing these contracts, it ensures:
+
+- 🔄 **Consistency** — all Barfinex modules speak the same language when exchanging data.
+- 🛡 **Type-safety** — developers get early validation and autocompletion across microservices.
+- ⚡ **Reusability** — one canonical definition of orders, accounts, and events prevents duplication.
+- 🌍 **Interoperability** — external contributors and integrators can easily plug into Barfinex APIs.
+
+`@barfinex/types` is not just a helper package — it is the **schema backbone of the Barfinex ecosystem**, enabling detectors, advisors, providers, and plugins to interact without ambiguity.
 
 ---
 
@@ -12,8 +21,20 @@ The `@barfinex/types` package is designed to provide reusable type definitions a
 - `@barfinex/advisors` — advisory logic and recommendations
 - `@barfinex/inspector` — rule-based market condition monitoring
 - `@barfinex/provider` — data and trading connector layer
-- `@barfinex/ui-api` — unified API and external access layer
-- `@barfinex/ui-client` — UI components for account and strategy management
+- `@barfinex/utils` — utility helpers and shared logic for Barfinex services
+- `@barfinex/types` — canonical TypeScript interfaces and enums (this package)
+- `@barfinex/telegram` — integration layer for Telegram notifications and bots
+- `@barfinex/provider-ws-bridge` — WebSocket bridge between Barfinex services and external data providers
+- `@barfinex/orders` — unified order management logic
+- `@barfinex/key` — secure key and credential management
+- `@barfinex/detector` — event-driven detection microservices
+- `@barfinex/connectors` — external trading and data connectors (Binance, etc.)
+- `@barfinex/config` — centralized configuration and environment management
+- `@barfinex/plugin-driver` — runtime plugin driver for modular extensions
+- `@barfinex/detector-plugin-orderflow-trade-analytics` — plugin for orderflow and trade analytics
+- `@barfinex/detector-plugin-trade-journal` — plugin for trade journaling and historical tracking
+- `ui-api` — unified API and external access layer
+- `ui-client` — UI components for account and strategy management
 
 It helps to:
 - unify contracts between services;
@@ -101,7 +122,9 @@ Join the conversation in our Telegram community: [t.me/barfinex](https://t.me/ba
 
 ---
 
-## 📜 This repository is licensed under the [Apache License 2.0](LICENSE) with additional restrictions.
+## 📜 License
+
+This repository is licensed under the [Apache License 2.0](LICENSE) with additional restrictions.
 
 ### Key Terms:
 1. **Attribution**: Proper credit must be given to the original author, Barfin Network Limited, with a link to the official website: [https://barfin.network/](https://barfin.network/).
@@ -109,6 +132,6 @@ Join the conversation in our Telegram community: [t.me/barfinex](https://t.me/ba
 3. **Display Requirements**: For non-commercial use, the following must be displayed:
    - The name "Barfin Network Limited".
    - The official logo.
-   - A working link to [https://barfin.network/](https://barfin.network/).
+   - A working link to [https://barfinex.com/](https://barfinex.com/).
 
-For further details or to request commercial use permissions, contact **Barfin Network Limited** through the official website. 
+For further details or to request commercial use permissions, contact **Barfin Network Limited** through the official website.

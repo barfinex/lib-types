@@ -1,8 +1,8 @@
 {
-  "name": "@barfinex/types",
+  "name": "@barfinex/telegram",
   "version": "0.0.0-development",
   "private": false,
-  "description": "Shared TypeScript interfaces and types for Barfinex ecosystem",
+  "description": "Shared types for Barfinex ecosystem",
   "author": "Barfinex",
   "license": "MIT",
   "homepage": "https://github.com/barfinex/lib-types#readme",
