@@ -5,6 +5,14 @@
   "description": "Shared TypeScript interfaces and types for Barfinex ecosystem",
   "author": "Barfinex",
   "license": "MIT",
+  "homepage": "https://github.com/barfinex/lib-types#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/barfinex/lib-types.git"
+  },
+  "bugs": {
+    "url": "https://github.com/barfinex/lib-types/issues"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -27,5 +35,10 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ]
   }
 }
