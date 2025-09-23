@@ -7,7 +7,6 @@ export interface Asset {
     /**
      * The type of connector associated with the asset (e.g., `binance`, `tinkoff`).
      */
-
     connectorType: ConnectorType;
 
     /**
