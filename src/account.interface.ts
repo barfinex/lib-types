@@ -9,6 +9,7 @@ export interface Asset {
      */
     connectorType: ConnectorType;
 
+
     /**
      * The market type of the asset (e.g., `spot`, `futures`).
      */
