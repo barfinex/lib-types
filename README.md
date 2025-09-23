@@ -40,7 +40,7 @@ yarn add @barfinex/types
 
 ## 📘 Example Usage
 
-Import the necessary interfaces into your TypeScript project:
+Import the necessary interfaces into your TypeScript project: 
 
 ```ts
 import { Account, MarketType, ConnectorType, OrderSide, OrderType, OrderSource } from '@barfinex/types';
