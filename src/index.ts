@@ -18,3 +18,5 @@ export * from './subscription.interface';
 export * from './inspector-regulation.interface';
 export * from './position.interface';
 export * from './symbol.interface';
+export * from './detector-config.interface';
+export * from './detector-config.utils';

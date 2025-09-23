@@ -81,7 +81,7 @@ export interface DataSource {
      */
     subscribeToSymbolPrices(
         options: { marketType: MarketType },
-        handler: (marketType: MarketType, symbolPrices: SymbolPrice[]) => void
+        handler: (marketType: MarketType, symbolPrices: SymbolPrice) => void
     ): Promise<() => void>;
 
     /**

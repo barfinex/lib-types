@@ -35,7 +35,7 @@ export interface DepthOrder {
     /**
      * Quantity available at the price level.
      */
-    qty: number;
+    volume: number;
 }
 
 /**

@@ -5,7 +5,24 @@ import { Order } from './order.interface';
 import { PluginInterface } from './plugin.interface';
 import { Connector } from './connector.interface';
 import { InspectorTradeSettingsConfig } from './inspector.interface';
-import { Subscription, Symbol, Provider, Advisor } from '.';
+import { Subscription, Symbol, Provider, Advisor, PluginMeta } from '.';
+
+
+export type DetectorConfig = {
+    apiPort: number;
+    sysName: string;
+    path: string;
+    logLevel: string;
+};
+
+export type DetectorPluginConfig = {
+    modules: any[];
+    metas: PluginMeta[];
+};
+
+export type DetectorModuleConfig = DetectorConfig & {
+    plugins?: DetectorPluginConfig;
+};
 
 // /**
 //  * Interface representing a trading detector, responsible for executing strategies.
@@ -110,7 +127,10 @@ export interface Detector {
     /**
      * Optional plugins configuration for the detector.
      */
-    plugins?: DetectorPlugin[];
+    plugins?: {
+        modules: any[]
+        metas: PluginMeta[]
+    };
 
     /**
      * Indicates if the detector operates in sandbox mode.
@@ -136,16 +156,18 @@ export interface Detector {
     subscriptions: Subscription[]; // Subscription settings
 
     tradeSettings?: InspectorTradeSettingsConfig
+    customConfig?: Record<string, any>;
+    preloadHistory?: boolean;
 }
 
 
 // Plugin configuration for the detector
-export interface DetectorPlugin {
-    name: string;                  // Name of the plugin
-    path: string;                  // File path to the plugin
-    enabled: boolean;              // Whether the plugin is enabled
-    options?: Record<string, unknown>; // Optional plugin-specific options
-}
+// export interface DetectorPlugin {
+//     name: string;                  // Name of the plugin
+//     path: string;                  // File path to the plugin
+//     enabled: boolean;              // Whether the plugin is enabled
+//     options?: Record<string, unknown>; // Optional plugin-specific options
+// }
 
 
 

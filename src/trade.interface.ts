@@ -4,11 +4,12 @@ import { Symbol } from "."
 /**
  * Enum representing the type of trade (buy or sell).
  */
-export enum TradeType {
-    /** Buy trade type. */
-    'BUY' = 'BUY',
-    /** Sell trade type. */
-    'SELL' = 'SELL',
+export enum TradeSide {
+    /** Long position (buy). */
+    LONG = "LONG",
+
+    /** Short position (sell). */
+    SHORT = "SHORT",
 }
 
 /**
@@ -34,7 +35,7 @@ export interface Trade {
     /**
      * Type of the trade (buy or sell).
      */
-    type: TradeType;
+    side: TradeSide;
 }
 
 /**

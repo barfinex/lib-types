@@ -1,0 +1,74 @@
+{
+  "name": "@barfinex/types",
+  "version": "1.1.68",
+  "description": "Shared TypeScript interfaces for Barfinex — an open-source standard for digital asset trading by Barfin Network.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "default": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json",
+    "prepublishOnly": "npm run build",
+    "publish:lib": "node publish.js"
+  },
+  "author": "Barfin Network",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/barfinex/types.git"
+  },
+  "bugs": {
+    "url": "https://github.com/barfinex/types/issues"
+  },
+  "homepage": "https://github.com/barfinex/types#readme",
+  "keywords": [
+    "barfinex",
+    "types",
+    "typescript",
+    "interfaces",
+    "enums",
+    "trading",
+    "algorithmic-trading",
+    "crypto",
+    "digital-assets",
+    "market-data",
+    "order",
+    "position",
+    "account",
+    "futures",
+    "spot",
+    "detector",
+    "advisor",
+    "inspector",
+    "provider",
+    "infrastructure",
+    "microservices",
+    "open-source",
+    "shared-types",
+    "type-safety",
+    "financial",
+    "connectors",
+    "sdk",
+    "strategy",
+    "automation"
+  ],
+  "devDependencies": {
+    "typescript": "^4.9.5"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@nestjs/typeorm": "^11.0.0",
+    "typeorm": "^0.3.26"
+  }
+}

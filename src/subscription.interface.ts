@@ -8,6 +8,7 @@ import { Order } from "./order.interface";
 import { OrderBook } from "./orderbook.interface";
 import { SymbolPrice, Symbol } from "./symbol.interface";
 import { Trade } from "./trade.interface";
+import { Candle, TimeFrame } from ".";
 
 /**
  * Enum representing the types of subscriptions available in the system.
@@ -34,11 +35,13 @@ export enum SubscriptionType {
 }
 
 export interface SubscriptionValue {
-    value: AccountEvent | Order | OrderBook | Trade | Symbol[] | SymbolPrice[] | { eventType: DetectorEventType, payload: any };
+    value: AccountEvent | Order | OrderBook | Trade | Symbol[] | SymbolPrice | Candle |
+    { eventType: DetectorEventType, payload: any, symbols?: Symbol[]; };
     options: {
         key?: string;
         connectorType?: ConnectorType;
         marketType?: MarketType;
+        updateMoment: number;
     };
 }
 
@@ -71,6 +74,7 @@ export interface Subscription {
      * Whether the subscription is active.
      */
     active: boolean;
+    intervals?: TimeFrame[];
 }
 
 // export interface SubscriptionCandles {

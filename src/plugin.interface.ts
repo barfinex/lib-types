@@ -1,71 +1,79 @@
 import { Candle } from './candle.interface';
-import { Detector, DetectorPlugin } from './detector.interface';
+import { Detector } from './detector.interface';
 import { Order } from './order.interface';
 import { OrderBook } from './orderbook.interface';
 import { Account } from './account.interface';
 import { Trade } from './trade.interface';
 import { InspectorRegulation } from './inspector-regulation.interface';
-import { Symbol } from "."
+import { Symbol } from ".";
+
+/**
+ * Metadata and configuration of a plugin.
+ * Эти данные используются в магазине и ЛК.
+ */
+export interface PluginMeta {
+    studioGuid?: string;
+    title: string;                // название
+    description?: string;         // описание
+    version: string;              // semver версия
+    author?: string;              // автор / организация
+    iconUrl?: string;             // URL иконки
+    coverUrl?: string;            // URL обложки
+    homepage?: string;            // домашняя страница
+    repoUrl?: string;             // репозиторий
+    tags?: string[];              // теги
+    visibility: 'draft' | 'private' | 'public'; // видимость в магазине
+    pluginApi?: string;
+
+    // 🔑 Новые поля
+    options?: Record<string, unknown>; // произвольные настройки плагина
+    createdAt?: string;                // дата создания
+    updatedAt?: string;                // дата последнего обновления
+    publishedAt?: string;              // дата публикации
+}
+
+
+/**
+ * Опции конкретного экземпляра плагина.
+ * Конфигурируются через UI.
+ */
+export type PluginOptions = Record<string, unknown>;
 
 /**
  * Interface for the plugin driver, managing plugin lifecycle and hooks.
  * This serves as the main entry point for integrating various plugins.
  */
 export interface PluginDriverInterface {
-    /**
-     * Registers an array of plugins with the driver.
-     *
-     * @param plugins - Array of plugins to register.
-     * This ensures that all plugins are initialized and available for execution.
-     */
     register(plugins: PluginInterface[]): void;
+    // getPublicAPI(): DetectorPlugin[];
 
-    /**
-     * Retrieves the public API exposed by plugins.
-     *
-     * @returns A record containing public APIs.
-     * Useful for external modules that need access to plugin functionalities.
-     */
-    getPublicAPI(): DetectorPlugin[];
-
-    /**
-     * Executes an asynchronous hook with the provided arguments.
-     *
-     * @param hookName - Name of the hook to execute.
-     * @param arg - Arguments for the hook function.
-     * This allows plugins to perform async operations like network requests or data processing.
-     */
     asyncReduce<T extends AsyncHooks>(
         hookName: T,
         ...arg: Parameters<AsyncHookArgumentsMap[T]>
     ): Promise<void>;
 
-    /**
-     * Executes a synchronous hook with the provided arguments.
-     *
-     * @param hookName - Name of the hook to execute.
-     * @param arg - Arguments for the hook function.
-     * This ensures immediate execution of critical plugin functionalities.
-     */
     reduce<T extends SyncHooks>(
         hookName: T,
         ...arg: Parameters<SyncHookArgumentsMap[T]>
     ): void;
 
-    /**
-     * Gets a snapshot of the current state of all plugins.
-     *
-     * @returns A record containing plugin data snapshots.
-     * Can be used to restore the plugin states at a later time.
-     */
     getSnapshot(): Record<string, Record<string, unknown>>;
+    hydrateSnapshot(pluginsData: Record<string, Record<string, unknown>>): void;
 
     /**
-     * Restores plugin states from a snapshot.
-     *
-     * @param pluginsData - Snapshot data to hydrate plugins.
+     * Возвращает список зарегистрированных плагинов с их метаданными.
      */
-    hydrateSnapshot(pluginsData: Record<string, Record<string, unknown>>): void;
+    listPlugins(): PluginMeta[];
+
+    /**
+     * Обновляет конфигурацию конкретного плагина (из UI).
+     */
+    updatePluginOptions(slug: string, options: PluginOptions): void;
+
+    /**
+     * Публикует плагин (меняет visibility).
+     */
+    publishPlugin(slug: string): void;
 }
 
 /**
@@ -166,38 +174,37 @@ export type AsyncHookArgumentsMap = {
 };
 
 /**
- * Interface representing a plugin with defined hooks and API.
+ * Interface representing a plugin with defined hooks, API, metadata and options.
  */
 export interface PluginInterface {
-    /**
-     * Name of the plugin.
-     */
+    /** Уникальное имя (id) */
     name: string;
-    /**
-     * Public API exposed by the plugin.
-     */
+
+    /** Публичный API, доступный другим плагинам */
     api: unknown;
 
+    /** Метаданные для магазина/ЛК */
+    meta: PluginMeta;
+
+    /** Конфигурация экземпляра, редактируемая из UI */
+    options?: PluginOptions;
+
+    // ========== Hooks ==========
     [PluginHook.onInit]: SyncHookArgumentsMap[PluginHook.onInit];
     [PluginHook.onStart]: AsyncHookArgumentsMap[PluginHook.onStart];
     [PluginHook.onDispose]: AsyncHookArgumentsMap[PluginHook.onDispose];
-
     [PluginHook.onCandleUpdate]: AsyncHookArgumentsMap[PluginHook.onCandleUpdate];
     [PluginHook.onAfterCandleUpdate]: AsyncHookArgumentsMap[PluginHook.onAfterCandleUpdate];
     [PluginHook.onCandleOpen]: AsyncHookArgumentsMap[PluginHook.onCandleOpen];
     [PluginHook.onAfterCandleOpen]: AsyncHookArgumentsMap[PluginHook.onAfterCandleOpen];
     [PluginHook.onCandleClose]: AsyncHookArgumentsMap[PluginHook.onCandleClose];
     [PluginHook.onAfterCandleClose]: AsyncHookArgumentsMap[PluginHook.onAfterCandleClose];
-
     [PluginHook.onAccountUpdate]: AsyncHookArgumentsMap[PluginHook.onAccountUpdate];
     [PluginHook.onAfterAccountUpdate]: AsyncHookArgumentsMap[PluginHook.onAfterAccountUpdate];
-
     [PluginHook.onOrderBookUpdate]: AsyncHookArgumentsMap[PluginHook.onOrderBookUpdate];
     [PluginHook.onAfterOrderBookUpdate]: AsyncHookArgumentsMap[PluginHook.onAfterOrderBookUpdate];
-
     [PluginHook.onTrade]: AsyncHookArgumentsMap[PluginHook.onTrade];
     [PluginHook.onAfterTrade]: AsyncHookArgumentsMap[PluginHook.onAfterTrade];
-
     [PluginHook.onOrderOpen]: AsyncHookArgumentsMap[PluginHook.onOrderOpen];
     [PluginHook.onAfterOrderOpen]: AsyncHookArgumentsMap[PluginHook.onAfterOrderOpen];
     [PluginHook.onOrderClose]: AsyncHookArgumentsMap[PluginHook.onOrderClose];
@@ -208,16 +215,7 @@ export interface PluginInterface {
  * Context object available to plugins during execution.
  */
 export interface PluginContext {
-    /**
-     * Finds a plugin by name and returns its interface.
-     *
-     * @param name - Name of the plugin to find.
-     * @returns The plugin interface if found.
-     */
     findPlugin<T extends PluginInterface>(name: string): T;
-    /**
-     * Detector-specific context information.
-     */
     detectorContext: {
         name: string;
         options: Detector;
@@ -225,16 +223,7 @@ export interface PluginContext {
         candles: any;
         orders: Array<Order>;
     };
-    /**
-     * Operations for managing trading activities.
-     */
     tradingOperation: {
-        /**
-         * Closes all open orders for the specified symbol.
-         *
-         * @param symbol - Symbol of the orders to close.
-         * @returns A promise resolving to the closed orders.
-         */
         closeAll(symbol: Symbol): Promise<Order[]>;
     };
 }
