@@ -1,8 +1,8 @@
 {
-  "name": "@barfinex/telegram",
+  "name": "@barfinex/types",
   "version": "0.0.0-development",
   "private": false,
-  "description": "Shared types for Barfinex ecosystem",
+  "description": "Core TypeScript type definitions and shared interfaces for the Barfinex ecosystem. Provides strongly-typed contracts for modules, services, and plugins.",
   "author": "Barfinex",
   "license": "MIT",
   "homepage": "https://github.com/barfinex/lib-types#readme",
@@ -23,6 +23,17 @@
     "clean": "rimraf dist",
     "release": "semantic-release"
   },
+  "keywords": [
+    "barfinex",
+    "typescript",
+    "types",
+    "interfaces",
+    "shared",
+    "contracts",
+    "schemas",
+    "models",
+    "definitions"
+  ],
   "devDependencies": {
     "typescript": "^5.6.0",
     "rimraf": "^5.0.0",
