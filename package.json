@@ -14,13 +14,22 @@
     "url": "https://github.com/barfinex/lib-types/issues"
   },
   "main": "dist/index.js",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "files": [
     "dist"
   ],
   "scripts": {
+    "clean": "rimraf dist tsconfig.tsbuildinfo",
     "build": "tsc -p tsconfig.app.json",
-    "clean": "rimraf dist",
+    "rebuild": "npm run clean && npm run build",
     "release": "semantic-release"
   },
   "keywords": [
@@ -32,24 +41,34 @@
     "contracts",
     "schemas",
     "models",
-    "definitions"
+    "definitions",
+    "monorepo",
+    "core"
   ],
   "devDependencies": {
-    "typescript": "^5.6.0",
-    "rimraf": "^5.0.0",
-    "semantic-release": "^24.0.0",
+    "typescript": "^5.6.3",
+    "rimraf": "^5.0.5",
     "@semantic-release/npm": "^12.0.0",
-    "@semantic-release/git": "^10.0.0",
-    "@semantic-release/github": "^10.0.0",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^11.0.6",
     "@semantic-release/commit-analyzer": "^13.0.0",
-    "@semantic-release/release-notes-generator": "^14.0.0"
+    "@semantic-release/release-notes-generator": "^14.0.0",
+    "semantic-release": "^24.1.0"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "release": {
     "branches": [
       "main"
+    ],
+    "repositoryUrl": "https://github.com/barfinex/lib-types",
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      "@semantic-release/github"
     ]
   }
 }

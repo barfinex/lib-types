@@ -53,12 +53,12 @@ export interface Account {
     /**
      * The type of connector associated with the account.
      */
-    connectorType: ConnectorType;
+    connectorType?: ConnectorType;
 
     /**
      * The market type of the account.
      */
-    marketType: MarketType;
+    marketType?: MarketType;
 
     /**
      * The list of assets within this account.

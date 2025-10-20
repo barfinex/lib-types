@@ -9,27 +9,27 @@ export interface Order {
     /**
      * Symbol or ticker of the trading pair (e.g., BTC/USD).
      */
-    symbol?: Symbol;
+    symbol?: Symbol | null;
     /**
      * Internal ID of the order.
      */
-    id?: string;
+    id?: string | null;
     /**
      * External ID of the order from the trading platform or connector.
      */
-    externalId?: string;
+    externalId?: string | null;
     /**
      * Side of the order (e.g., buy or sell).
      */
-    side?: OrderSide;
+    side?: OrderSide | null;
     /**
      * Type of the order (e.g., market, limit).
      */
-    type?: OrderType;
+    type?: OrderType | null;
     /**
      * Price of the order, if applicable.
      */
-    price?: number;
+    price?: number | null;
     /**
      * Time when the order was created (Unix timestamp).
      */
@@ -37,15 +37,15 @@ export interface Order {
     /**
      * Time when the order was last updated (Unix timestamp).
      */
-    updateTime?: number;
+    updateTime?: number | null;
     /**
      * Total quantity for the order.
      */
-    quantity?: number;
+    quantity?: number | null;
     /**
      * Quantity of the order that has been executed.
      */
-    quantityExecuted?: number;
+    quantityExecuted?: number | null;
     /**
      * Indicates whether the order is placed in a sandbox (test) environment.
      */
@@ -53,7 +53,7 @@ export interface Order {
     /**
      * Price at which the order will be closed (e.g., for stop-loss or take-profit orders).
      */
-    priceClose?: number;
+    priceClose?: number | null;
     /**
      * Type of connector used for the order (e.g., Binance, Tinkoff).
      */
@@ -69,7 +69,7 @@ export interface Order {
     /**
      * Leverage used for the order, if applicable.
      */
-    leverage?: number;
+    leverage?: number | null;
 }
 
 /**
@@ -87,7 +87,7 @@ export interface OrderSource {
     /**
      * Base API URL of the source system.
      */
-    restApiUrl: string;
+    restApiUrl?: string | null;
 }
 
 /**

@@ -5,15 +5,15 @@
     "module": "CommonJS",
     "declaration": true,
     "emitDeclarationOnly": false,
-    "rootDir": "./src",
-    "outDir": "../../dist/libs/types", // ✅ складываем в общий dist
+    "rootDir": "src",
+    "outDir": "../../dist/libs/types",
     "tsBuildInfoFile": "../../dist/libs/types.tsbuildinfo",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "composite": true, // ✅ указываем, что библиотека участвует в project references
-    "baseUrl": "../../" // ✅ для алиасов в других либах
+    "composite": true,
+    "baseUrl": "../../"
   },
   "include": [
     "src/**/*.ts"
