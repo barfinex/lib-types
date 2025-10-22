@@ -13,6 +13,7 @@ This package consolidates **shared TypeScript interfaces, models, and enums** th
 
 ---
 
+
 ## 🚀 Purpose
 
 The `@barfinex/types` package is designed to provide reusable type definitions across the following modules:
