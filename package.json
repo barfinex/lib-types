@@ -2,7 +2,7 @@
   "name": "@barfinex/types",
   "version": "1.0.9",
   "private": false,
-  "description": "Core TypeScript type definitions and shared interfaces for the Barfinex ecosystem. Provides strongly-typed contracts for modules, services, and plugins.",
+  "description": "Core TypeScript type definitions and shared interfaces for the Barfinex ecosystem.",
   "author": "Barfinex",
   "license": "MIT",
   "homepage": "https://github.com/barfinex/lib-types#readme",
@@ -29,6 +29,7 @@
     "clean": "rimraf dist tsconfig.tsbuildinfo",
     "build": "tsc -p tsconfig.app.json",
     "rebuild": "npm run clean && npm run build",
+    "prepublishOnly": "npm run build",
     "release": "semantic-release"
   },
   "keywords": [
@@ -39,35 +40,23 @@
     "shared",
     "contracts",
     "schemas",
-    "models",
-    "definitions",
-    "monorepo",
-    "core"
+    "models"
   ],
   "devDependencies": {
     "typescript": "^5.6.3",
     "rimraf": "^5.0.5",
-    "semantic-release": "^24.1.0",
     "@semantic-release/npm": "^12.0.0",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^11.0.6",
     "@semantic-release/commit-analyzer": "^13.0.0",
-    "@semantic-release/release-notes-generator": "^14.0.0"
+    "@semantic-release/release-notes-generator": "^14.0.0",
+    "semantic-release": "^24.1.0"
   },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
   "release": {
-    "branches": [
-      "main"
-    ],
-    "repositoryUrl": "https://github.com/barfinex/lib-types",
-    "plugins": [
-      "@semantic-release/commit-analyzer",
-      "@semantic-release/release-notes-generator",
-      "@semantic-release/npm",
-      "@semantic-release/github"
-    ]
+    "branches": ["main"]
   }
 }
