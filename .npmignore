@@ -1,7 +1,3 @@
-# Исключаем исходники
-src/
-*.ts
-
 # Конфиги и метаданные
 tsconfig.json
 tsconfig.*.json
