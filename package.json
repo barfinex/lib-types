@@ -1,6 +1,6 @@
 {
   "name": "@barfinex/types",
-  "version": "1.0.9",
+  "version": "0.0.0-development",
   "private": false,
   "description": "Core TypeScript type definitions and shared interfaces for the Barfinex ecosystem. Provides strongly-typed contracts for modules, services, and plugins.",
   "author": "Barfinex",
@@ -14,6 +14,7 @@
     "url": "https://github.com/barfinex/lib-types/issues"
   },
   "main": "dist/index.js",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
@@ -47,12 +48,12 @@
   "devDependencies": {
     "typescript": "^5.6.3",
     "rimraf": "^5.0.5",
-    "semantic-release": "^24.1.0",
     "@semantic-release/npm": "^12.0.0",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^11.0.6",
     "@semantic-release/commit-analyzer": "^13.0.0",
-    "@semantic-release/release-notes-generator": "^14.0.0"
+    "@semantic-release/release-notes-generator": "^14.0.0",
+    "semantic-release": "^24.1.0"
   },
   "publishConfig": {
     "access": "public",
