@@ -13,8 +13,9 @@
   "bugs": {
     "url": "https://github.com/barfinex/lib-types/issues"
   },
-  "main": "dist/index.d.ts",
-  "types": "dist/index.d.ts",
+  "type": "module",
+  "main": "./dist/index.d.ts",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts"
