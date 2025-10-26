@@ -8,6 +8,7 @@ export interface Asset {
      * The type of connector associated with the asset (e.g., `binance`, `tinkoff`).
      */
     connectorType: ConnectorType;
+
     /**
      * The market type of the asset (e.g., `spot`, `futures`).
      */
