@@ -3,21 +3,16 @@
   "compilerOptions": {
     "target": "ES2020",
     "module": "CommonJS",
-    // ✅ Генерируем только декларации, без JS
     "declaration": true,
     "emitDeclarationOnly": true,
-    // ✅ Исходники → дистрибутив
     "rootDir": "src",
-    "outDir": "dist",
-    // ✅ Метаданные сборки
+    "outDir": "../../dist/libs/types",
     "tsBuildInfoFile": "../../dist/libs/types.tsbuildinfo",
-    // ✅ Строгая типизация
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "composite": true,
-    // ✅ Для алиасов внутри пакета
+    "composite": false,
     "baseUrl": "./src"
   },
   "include": [
