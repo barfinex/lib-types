@@ -14,7 +14,6 @@ export interface Asset {
      */
     marketType: MarketType;
 
-
     /**
      * The symbol for the asset (e.g., `BTC/USD`, `AAPL`).
      */
