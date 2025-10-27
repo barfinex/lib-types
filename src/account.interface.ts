@@ -12,6 +12,7 @@ export interface Asset {
     /**
      * The market type of the asset (e.g., `spot`, `futures`).
      */
+
     marketType: MarketType;
 
 
