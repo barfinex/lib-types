@@ -9,6 +9,7 @@ import { AccountCommision } from './account.interface';
 export interface Advisor {
 
     key: string
+
     restApiUrl: string
 
     /**

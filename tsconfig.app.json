@@ -6,13 +6,13 @@
     "declaration": true,
     "emitDeclarationOnly": true,
     "rootDir": "src",
-    "outDir": "dist",
-    "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo",
+    "outDir": "../../dist/libs/types",
+    "declarationDir": "../../dist/libs/types",
+    "tsBuildInfoFile": "../../dist/libs/types.tsbuildinfo",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "composite": false,
     "baseUrl": "./src"
   },
   "include": [
