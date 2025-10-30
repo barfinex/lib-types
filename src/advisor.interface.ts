@@ -10,7 +10,6 @@ export interface Advisor {
 
     key: string
     restApiUrl: string
-
     /**
      * Base API endpoint for the provider used by the Advisor service.
      */
