@@ -26,6 +26,7 @@ export interface Asset {
      */
     walletBalance: number;
 
+
     /**
      * The available balance that can be used for trading.
      */
