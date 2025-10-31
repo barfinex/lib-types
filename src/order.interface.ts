@@ -6,6 +6,7 @@ import { Symbol } from "."
  * Interface representing a trading order.
  */
 export interface Order {
+    closeTime: null;
     /**
      * Symbol or ticker of the trading pair (e.g., BTC/USD).
      */
