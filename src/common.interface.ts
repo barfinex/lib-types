@@ -108,11 +108,6 @@ export enum TimeFrame {
     min1 = 'min1',
 
     /**
-     * `min3`: 3-minute time frame.
-     */
-    min3 = 'min3',
-
-    /**
      * `min5`: 5-minute time frame.
      */
     min5 = 'min5',

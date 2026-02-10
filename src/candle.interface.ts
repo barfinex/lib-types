@@ -3,20 +3,6 @@ import { TimeFrame } from "./common.interface";
 import { Symbol } from "./symbol.interface";
 
 /**
- * Raw-структура свечи (для хранения и REST).
- */
-export interface CandleRaw {
-    o: number;
-    c: number;
-    h: number;
-    l: number;
-    v: number;
-    time: number;
-    interval?: TimeFrame;
-    symbol: Symbol;
-}
-
-/**
  * Domain-модель свечи (для стратегий).
  */
 export interface Candle {
@@ -28,7 +14,6 @@ export interface Candle {
     time: number;
     interval?: TimeFrame;
     symbol: Symbol;
-    raw: CandleRaw;
 }
 
 /**

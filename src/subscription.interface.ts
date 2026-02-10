@@ -80,7 +80,7 @@ export interface Subscription {
 // export interface SubscriptionCandles {
 //     maxHistoryDepthBars: number; // Maximum historical bars to fetch
 //     symbols: Symbol[]; // Symbols to monitor for candlesticks
-//     intervals: TimeFrame[];         // Time intervals for candlestick data (e.g., ['1m', '1h'])
+//     intervals: TimeFrame[];         // Time intervals for candlestick data (e.g., ['min1', 'h1'])
 // };
 
 // // Subscriptions settings for the detector

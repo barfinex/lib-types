@@ -26,7 +26,7 @@ export interface History {
     days: number;
 
     /**
-     * The time frame of the historical data (e.g., 1m, 1h, 1d).
+     * The time frame of the historical data (e.g., min1, h1, d1).
      */
     interval: TimeFrame;
 
@@ -48,7 +48,7 @@ export interface History {
  * @param from - The starting timestamp (Unix time) for the historical data.
  * @param to - The ending timestamp (Unix time) for the historical data.
  * @param ticker - The symbol or ticker for which the historical data is requested (e.g., BTC/USD, AAPL).
- * @param interval - The time frame for the historical data (e.g., 1m, 1h, 1d).
+ * @param interval - The time frame for the historical data (e.g., min1, h1, day).
  * @returns A Promise resolving to an array of candles containing the requested historical data.
  */
 export type HistoryRequest = (from: number, to: number, ticker: string, interval: TimeFrame) => Promise<Candle[]>;
