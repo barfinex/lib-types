@@ -1,52 +1,21 @@
 # @barfinex/types
 
-**`@barfinex/types`** is the **foundational contract layer** of the [Barfinex](https://barfinex.com) ecosystem — an open-source platform for algorithmic trading, quantitative research, and digital asset infrastructure.
+**Shared TypeScript contracts** for the [Barfinex](https://barfinex.com) ecosystem — accounts, orders, positions, signals, connectors, and API boundaries in one place.
 
-This package consolidates **shared TypeScript interfaces, models, and enums** that describe the **core entities of trading systems**: accounts, orders, positions, markets, connectors, and signals. By centralizing these contracts, it ensures:
-
-- 🔄 **Consistency** — all Barfinex modules speak the same language when exchanging data.
-- 🛡 **Type-safety** — developers get early validation and autocompletion across microservices.
-- ⚡ **Reusability** — one canonical definition of orders, accounts, and events prevents duplication.
-- 🌍 **Interoperability** — external contributors and integrators can easily plug into Barfinex APIs.
-
-`@barfinex/types` is not just a helper package — it is the **schema backbone of the Barfinex ecosystem**, enabling detectors, advisors, providers, and plugins to interact without ambiguity.
+Every Barfinex component (Provider, Detector, Advisor, Inspector, connectors, plugins) uses these types. That means **one language** for trading entities, fewer mismatches between services, and better autocomplete and refactoring in your IDE.
 
 ---
 
+## What it does
 
-## 🚀 Purpose
-
-The `@barfinex/types` package is designed to provide reusable type definitions across the following modules:
-
-- `@barfinex/detectors` — signal-generating microservices
-- `@barfinex/advisors` — advisory logic and recommendations
-- `@barfinex/inspector` — rule-based market condition monitoring
-- `@barfinex/provider` — data and trading connector layer
-- `@barfinex/utils` — utility helpers and shared logic for Barfinex services
-- `@barfinex/types` — canonical TypeScript interfaces and enums (this package)
-- `@barfinex/telegram` — integration layer for Telegram notifications and bots
-- `@barfinex/provider-ws-bridge` — WebSocket bridge between Barfinex services and external data providers
-- `@barfinex/orders` — unified order management logic
-- `@barfinex/key` — secure key and credential management
-- `@barfinex/detector` — event-driven detection microservices
-- `@barfinex/connectors` — external trading and data connectors (Binance, etc.)
-- `@barfinex/config` — centralized configuration and environment management
-- `@barfinex/plugin-driver` — runtime plugin driver for modular extensions
-- `@barfinex/detector-plugin-orderflow-trade-analytics` — plugin for orderflow and trade analytics
-- `@barfinex/detector-plugin-trade-journal` — plugin for trade journaling and historical tracking
-- `ui-api` — unified API and external access layer
-- `ui-client` — UI components for account and strategy management
-
-It helps to:
-- unify contracts between services;
-- reduce duplication;
-- ensure type-safety and clarity across the codebase.
+- **Domain models** — `Account`, `Order`, `Position`, `Candle`, `OrderBook`, `Trade`, `Signal`, and related enums (e.g. `OrderSide`, `MarketType`, `ConnectorType`).
+- **Service contracts** — interfaces for detectors, advisors, inspectors, providers, and plugins so they can be composed and proxied.
+- **Subscriptions & config** — types for market data subscriptions, detector config, and connector options.
+- **Consistency** — same shapes in REST APIs, Redis events, and Studio; aligned with [Provider API](https://barfinex.com/docs/provider-api) and [Detector](https://barfinex.com/docs/installation-detector).
 
 ---
 
-## 📦 Installation
-
-To install the package, use npm or yarn:
+## Installation
 
 ```sh
 npm install @barfinex/types
@@ -60,79 +29,32 @@ yarn add @barfinex/types
 
 ---
 
-## 📘 Example Usage
+## What's included
 
-Import the necessary interfaces into your TypeScript project: 
+Core interfaces and enums used across the platform, including:
 
-```ts
-import { Account, MarketType, ConnectorType, OrderSide, OrderType, OrderSource } from '@barfinex/types';
-
-const account: Account = {
-  id: '123',
-  name: 'Test Account',
-  balance: 1000,
-  marketType: MarketType.futures,
-  connectorType: ConnectorType.binance,
-  positions: [],
-  orders: [
-    {
-      id: '456',
-      symbol: { name: 'BTCUSDT' },
-      externalId: 'ext-123',
-      side: OrderSide.buy,
-      type: OrderType.limit,
-      price: 500,
-      time: Date.now(),
-      updateTime: Date.now(),
-      quantity: 10,
-      quantityExecuted: 0,
-      useSandbox: false,
-      priceClose: 510,
-      connectorType: ConnectorType.binance,
-      marketType: MarketType.futures,
-      source: { type: OrderSourceType.detector },
-      leverage: 10,
-    },
-  ],
-};
-```
+- **Trading** — `Account`, `Order`, `Position`, `OrderSide`, `OrderType`, `OrderSource`, `MarketType`, `ConnectorType`.
+- **Market data** — `Candle`, `Trade`, `OrderBook`, `Symbol`, subscription types.
+- **Signals & components** — `Signal`, detector/advisor/inspector/provider interfaces, plugin contracts.
+- **Config & history** — detector config, history requests, common primitives.
 
 ---
 
-## 📚 What's Included
+## Documentation
 
-The `@barfinex/types` package provides core type definitions and enums used across all Barfinex components. It includes:
-
-- **Accounts, Positions, and Orders** — unified models for trading objects
-- **Trading Platforms and Markets** — support for `spot`, `futures`, and custom market types
-- **Signal and Order Sources** — such as detectors, advisors, and inspectors
-- **Data Subscriptions** — for market data, user events, signals, etc.
-- **Component Interfaces** — shared definitions for detectors, advisors, inspectors, providers
+- **Barfinex overview** — [First Steps](https://barfinex.com/docs/first-steps), [Architecture](https://barfinex.com/docs/architecture), [Glossary](https://barfinex.com/docs/glossary).
+- **APIs (types underpin these)** — [Provider API reference](https://barfinex.com/docs/provider-api), [Building with the API](https://barfinex.com/docs/frontend-api), [Signals context API](https://barfinex.com/docs/signals-context).
+- **Deployment** — [Installation provider](https://barfinex.com/docs/installation-provider), [Installation detector](https://barfinex.com/docs/installation-detector), [Terminal Configuration](https://barfinex.com/docs/configuration-studio).
+- **Troubleshooting** — [Typical problems and solutions](https://barfinex.com/docs/troubleshooting).
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
-We welcome contributions to help grow the **open Barfinex standard**:
-
-- 🛠 Open an issue or submit a PR
-- 💡 Propose new domain types or improvements
-- 💬 Share feedback or use cases
-
-Join the conversation in our Telegram community: [t.me/barfinex](https://t.me/barfinex)
+Proposals for new domain types or refinements are welcome. Open an [issue](https://github.com/barfinex/lib-types/issues) or PR. Community: [Telegram](https://t.me/barfinex) · [GitHub](https://github.com/barfinex).
 
 ---
 
-## 📜 License
+## License
 
-This repository is licensed under the [Apache License 2.0](LICENSE) with additional restrictions.
-
-### Key Terms:
-1. **Attribution**: Proper credit must be given to the original author, Barfin Network Limited, with a link to the official website: [https://barfinex.com/](https://barfinex.com/).
-2. **Non-Commercial Use**: The use of this codebase for commercial purposes is prohibited without explicit written permission.
-3. **Display Requirements**: For non-commercial use, the following must be displayed:
-   - The name "Barfin Network Limited".
-   - The official logo.
-   - A working link to [https://barfinex.com/](https://barfinex.com/).
-
-For further details or to request commercial use permissions, contact **Barfin Network Limited** through the official website.
+Licensed under the [Apache License 2.0](LICENSE) with additional terms. Attribution to **Barfin Network Limited** and a link to [https://barfinex.com](https://barfinex.com) are required. Commercial use requires explicit permission. See [LICENSE](LICENSE) and the [Barfinex site](https://barfinex.com) for details.
