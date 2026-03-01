@@ -14,6 +14,8 @@ export interface Candle {
     time: number;
     interval?: TimeFrame;
     symbol: Symbol;
+    /** Optional raw payload from exchange (e.g. CCXT OHLCV tuple). */
+    raw?: unknown;
 }
 
 /**
