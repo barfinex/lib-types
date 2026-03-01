@@ -1,6 +1,7 @@
 // === Interfaces ===
 export * from './account.interface';
 export * from './advisor.interface';
+export * from './advisor-agent.interface';
 export * from './candle.interface';
 export * from './common.interface';
 export * from './connector.interface';
@@ -16,6 +17,7 @@ export * from './orderbook.interface';
 export * from './plugin.interface';
 export * from './position.interface';
 export * from './provider.interface';
+export * from './signal.interface';
 export * from './subscription.interface';
 export * from './symbol.interface';
 export * from './trade.interface';

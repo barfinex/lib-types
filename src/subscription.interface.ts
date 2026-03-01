@@ -1,7 +1,5 @@
-import { Detector, DetectorEventType } from "./detector.interface";
+import { Detector } from "./detector.interface";
 import { Connector } from "./connector.interface";
-// import { TimeFrame } from "./common.interface";
-// import { Symbol } from "."
 import { AccountEvent } from "./account.interface";
 import { ConnectorType, MarketType } from "./connector.interface";
 import { Order } from "./order.interface";
@@ -11,91 +9,182 @@ import { Trade } from "./trade.interface";
 import { Candle, TimeFrame } from ".";
 
 /**
- * Enum representing the types of subscriptions available in the system.
+ * Strict event sources.
+ * Only these 4 applications can emit events.
  */
-export enum SubscriptionType {
-    /** Subscription for market trade data. */
-    PROVIDER_MARKETDATA_TRADE = 'PROVIDER_MARKETDATA_TRADE',
-    /** Subscription for market order book updates. */
-    PROVIDER_MARKETDATA_ORDERBOOK = 'PROVIDER_MARKETDATA_ORDERBOOK',
-    /** Subscription for market candle data (e.g., OHLC data). */
-    PROVIDER_MARKETDATA_CANDLE = 'PROVIDER_MARKETDATA_CANDLE',
-    /** Subscription for user account events (e.g., balance updates). */
-    PROVIDER_ACCOUNT_EVENT = 'PROVIDER_ACCOUNT_EVENT',
-    /** Subscription for order updates. */
-    PROVIDER_ORDER_CREATE = 'PROVIDER_ORDER_CREATE',
-    /** Subscription for order updates. */
-    PROVIDER_ORDER_CLOSE = 'PROVIDER_ORDER_CLOSE',
-    /** Subscription for symbol price updates. */
-    PROVIDER_SYMBOLS = 'PROVIDER_SYMBOLS',
-    PROVIDER_SYMBOL_PRICES = 'PROVIDER_SYMBOL_PRICES',
-    INSPECTOR_EVENT = 'INSPECTOR_EVENT',
-    DETECTOR_EVENT = "DETECTOR_EVENT",
-    ADVISOR_EVENT = "ADVISOR_EVENT",
-}
-
-export interface SubscriptionValue {
-    value: AccountEvent | Order | OrderBook | Trade | Symbol[] | SymbolPrice | Candle |
-    { eventType: DetectorEventType, payload: any, symbols?: Symbol[]; };
-    options: {
-        key?: string;
-        connectorType?: ConnectorType;
-        marketType?: MarketType;
-        updateMoment: number;
-    };
+export enum EventSource {
+  PROVIDER = 'PROVIDER',
+  INSPECTOR = 'INSPECTOR',
+  DETECTOR = 'DETECTOR',
+  ADVISOR = 'ADVISOR',
 }
 
 /**
- * Interface representing a subscription configuration.
+ * All allowed subscription/event types.
+ * Must always start with one of the EventSource prefixes.
  */
-export interface Subscription {
-    /**
-     * The type of subscription (e.g., market data, account events).
-     */
-    type: SubscriptionType;
-    /**
-     * The symbol or trading pair for the subscription (optional).
-     * Example: BTC/USD, AAPL.
-     */
-    symbols?: Symbol[];
-    /**
-     * Options related to the connector for this subscription (optional).
-     */
-    connector?: Connector;
-    /**
-     * Options related to the detector for this subscription (optional).
-     */
-    detector?: Detector;
-    /**
-     * The timestamp (Unix time) of the last update for this subscription.
-     */
-    updateMoment?: number;
-    /**
-     * Whether the subscription is active.
-     */
-    active: boolean;
-    intervals?: TimeFrame[];
+export enum SubscriptionType {
+
+  // =========================
+  // PROVIDER (DATA LAYER)
+  // =========================
+
+  PROVIDER_MARKETDATA_TRADE = 'PROVIDER_MARKETDATA_TRADE',
+  PROVIDER_MARKETDATA_ORDERBOOK = 'PROVIDER_MARKETDATA_ORDERBOOK',
+  PROVIDER_MARKETDATA_CANDLE = 'PROVIDER_MARKETDATA_CANDLE',
+  PROVIDER_ACCOUNT_EVENT = 'PROVIDER_ACCOUNT_EVENT',
+  PROVIDER_ORDER_CREATE = 'PROVIDER_ORDER_CREATE',
+  PROVIDER_ORDER_CLOSE = 'PROVIDER_ORDER_CLOSE',
+  PROVIDER_SYMBOLS = 'PROVIDER_SYMBOLS',
+  PROVIDER_SYMBOL_PRICES = 'PROVIDER_SYMBOL_PRICES',
+
+  // =========================
+  // INSPECTOR (RISK + REGIME)
+  // =========================
+
+  INSPECTOR_TREND_DETECTED = 'INSPECTOR_TREND_DETECTED',
+  INSPECTOR_RANGE_DETECTED = 'INSPECTOR_RANGE_DETECTED',
+  INSPECTOR_VOLATILITY_SPIKE = 'INSPECTOR_VOLATILITY_SPIKE',
+  INSPECTOR_LIQUIDITY_DROPPED = 'INSPECTOR_LIQUIDITY_DROPPED',
+  INSPECTOR_DATA_GAP_DETECTED = 'INSPECTOR_DATA_GAP_DETECTED',
+  INSPECTOR_DATA_OUTLIER_DETECTED = 'INSPECTOR_DATA_OUTLIER_DETECTED',
+  INSPECTOR_DATA_MATURITY_UPDATE = 'INSPECTOR_DATA_MATURITY_UPDATE',
+
+  INSPECTOR_RISK_LIMIT_BREACH = 'INSPECTOR_RISK_LIMIT_BREACH',
+  INSPECTOR_RISK_MARGIN_UPDATE = 'INSPECTOR_RISK_MARGIN_UPDATE',
+  INSPECTOR_RISK_KILL_SWITCH = 'INSPECTOR_RISK_KILL_SWITCH',
+
+  // =========================
+  // DETECTOR (SIGNALS + INTENT)
+  // =========================
+
+  DETECTOR_SIGNAL_GENERATED = 'DETECTOR_SIGNAL_GENERATED',
+  DETECTOR_SIGNAL_UPDATED = 'DETECTOR_SIGNAL_UPDATED',
+  DETECTOR_SIGNAL_INVALIDATED = 'DETECTOR_SIGNAL_INVALIDATED',
+
+  DETECTOR_POSITION_OPEN_REQUEST = 'DETECTOR_POSITION_OPEN_REQUEST',
+  DETECTOR_POSITION_CLOSE_REQUEST = 'DETECTOR_POSITION_CLOSE_REQUEST',
+  DETECTOR_POSITION_REDUCE_REQUEST = 'DETECTOR_POSITION_REDUCE_REQUEST',
+  DETECTOR_POSITION_FLIP_REQUEST = 'DETECTOR_POSITION_FLIP_REQUEST',
+
+  // =========================
+  // ADVISOR (AI + EXPLAINABILITY)
+  // =========================
+
+  ADVISOR_DECISION_REQUEST = 'ADVISOR_DECISION_REQUEST',
+  ADVISOR_DECISION_RESPONSE = 'ADVISOR_DECISION_RESPONSE',
+  ADVISOR_DECISION_CONTEXT_SNAPSHOT = 'ADVISOR_DECISION_CONTEXT_SNAPSHOT',
+
+  ADVISOR_CONFIDENCE_LOW = 'ADVISOR_CONFIDENCE_LOW',
+  ADVISOR_MODEL_SWITCHED = 'ADVISOR_MODEL_SWITCHED',
+  ADVISOR_HALLUCINATION_DETECTED = 'ADVISOR_HALLUCINATION_DETECTED',
 }
 
-// export interface SubscriptionCandles {
-//     maxHistoryDepthBars: number; // Maximum historical bars to fetch
-//     symbols: Symbol[]; // Symbols to monitor for candlesticks
-//     intervals: TimeFrame[];         // Time intervals for candlestick data (e.g., ['min1', 'h1'])
-// };
+/**
+ * Base institutional event contract.
+ */
+export interface BaseEvent<TType extends SubscriptionType, TPayload> {
+  eventId: string;
+  type: TType;
+  source: EventSource;
+  timestamp: number;
+  correlationId?: string;
+  causationId?: string;
+  payload: TPayload;
+}
 
-// // Subscriptions settings for the detector
-// export interface Subscription {
-//     accounts: boolean;             // Whether to subscribe to account updates
-//     trades: {                      // Subscription settings for trades
-//         symbols: Symbol[]; // Symbols to monitor for trades
-//     };
-//     allSymbols: boolean;           // Subscribe to updates for all symbols
-//     allSymbolPrices: boolean;      // Subscribe to price updates for all symbols
-//     orderBooks: {                  // Subscription settings for order books
-//         symbols: Symbol[]; // Symbols to monitor in order books
-//     };
-//     inspectorRegulations: boolean; // Subscribe to regulatory updates
-//     candles: SubscriptionCandles // Subscription settings for candlestick data
-// }
+/**
+ * Inspector-specific payload examples.
+ */
+export interface InspectorRiskPayload {
+  symbol: Symbol;
+  currentExposure: number;
+  maxAllowedExposure: number;
+  reason?: string;
+}
+
+export interface InspectorRegimePayload {
+  symbol: Symbol;
+  regime: 'TREND' | 'RANGE' | 'VOLATILE' | 'UNKNOWN';
+}
+
+/**
+ * Detector payloads.
+ */
+export interface DetectorSignalPayload {
+  symbol: Symbol;
+  side: 'LONG' | 'SHORT';
+  confidence: number;
+  strategyId: string;
+}
+
+/**
+ * Advisor payloads.
+ */
+export interface AdvisorDecisionPayload {
+  decisionId: string;
+  approved: boolean;
+  reasoning?: string;
+  confidence?: number;
+}
+
+/**
+ * Strict union of all allowed payloads.
+ * NO any allowed.
+ */
+export type EventPayload =
+  | AccountEvent
+  | Order
+  | OrderBook
+  | Trade
+  | Symbol[]
+  | SymbolPrice
+  | Candle
+  | InspectorRiskPayload
+  | InspectorRegimePayload
+  | DetectorSignalPayload
+  | AdvisorDecisionPayload;
+
+export type EventEnvelope = BaseEvent<SubscriptionType, EventPayload>;
+
+/**
+ * Subscription value wrapper.
+ */
+export interface SubscriptionValue {
+  value: EventPayload | EventEnvelope;
+  options: {
+    key?: string;
+    connectorType?: ConnectorType;
+    marketType?: MarketType;
+    updateMoment: number;
+  };
+}
+
+/**
+ * Subscription configuration.
+ */
+export interface Subscription {
+  type: SubscriptionType;
+  symbols?: Symbol[];
+  connector?: Connector;
+  detector?: Detector;
+  updateMoment?: number;
+  active: boolean;
+  intervals?: TimeFrame[];
+}
+
+/**
+ * Compile-time source validation.
+ */
+export function assertEventSourceMatch(
+  type: `${EventSource}_${string}` | SubscriptionType,
+  source: EventSource,
+): void {
+  if (!type.startsWith(source)) {
+    throw new Error(
+      `Invalid event emission: ${source} cannot emit ${type}`
+    );
+  }
+}
 
 

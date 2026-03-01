@@ -154,6 +154,23 @@ export enum TimeFrame {
 }
 
 /**
+ * Все поддерживаемые интервалы для свечей (подкачка, backfill, подписки).
+ * Единый источник правды для списка интервалов.
+ */
+export const ALL_CANDLE_INTERVALS: TimeFrame[] = [
+    TimeFrame.min1,
+    TimeFrame.min5,
+    TimeFrame.min15,
+    TimeFrame.min30,
+    TimeFrame.h1,
+    TimeFrame.h2,
+    TimeFrame.h4,
+    TimeFrame.day,
+    TimeFrame.week,
+    TimeFrame.month,
+];
+
+/**
  * Enum for working environments in the system.
  */
 export enum WorkingEnv {

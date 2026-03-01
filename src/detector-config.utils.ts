@@ -77,5 +77,9 @@ export function buildDetectorConfig(config: DetectorConfigInput): Detector {
 
         advisor: config.advisor ?? DEFAULT_ADVISOR,
         plugins: config.plugins ?? { modules: [], metas: [] },
-    };
+
+        qualityGate: config.qualityGate,
+        performance: config.performance,
+        customConfig: config.customConfig,
+    } as Detector;
 }

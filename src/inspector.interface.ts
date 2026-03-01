@@ -31,6 +31,10 @@ export interface InspectorRiskManagement {
      */
     breakevenPercent?: number;
     /**
+     * Allowed reversion buffer around entry after breakeven is armed.
+     */
+    breakevenBufferPercent?: number;
+    /**
      * Maximum allowable daily loss as a percentage (optional).
      */
     maxDailyLossPercent?: number;
@@ -58,6 +62,14 @@ export interface InspectorRiskManagement {
      * Minimum risk-to-reward ratio for a trade to be valid (optional).
      */
     minRiskRewardRatio?: number;
+    /**
+     * Maximum number of correlated runtime-managed positions allowed.
+     */
+    maxCorrelatedPositions?: number;
+    /**
+     * Asset groups treated as correlated (base symbols).
+     */
+    correlatedGroups?: string[];
 }
 
 /**
@@ -80,6 +92,14 @@ export interface InspectorAssetManagement {
      * Maximum allowable spread as a percentage.
      */
     spreadTolerancePercent: number;
+    /**
+     * Maximum spread allowed when executing forced close.
+     */
+    maxSpreadForClosePercent?: number;
+    /**
+     * Minimum top-of-book depth (USD) required to execute close.
+     */
+    minTopDepthUsdForClose?: number;
 }
 
 /**
@@ -136,6 +156,22 @@ export interface InspectorStrategyLogic {
      * Maximum return-on-investment (ROI) threshold for a trade to be valid.
      */
     maxROIThreshold: number;
+    /**
+     * Enables stress policy that tightens risk behavior.
+     */
+    enableStressPolicy?: boolean;
+    /**
+     * Spread percentage that activates stress mode.
+     */
+    stressSpreadTriggerPercent?: number;
+    /**
+     * Detector sysname used for auto-throttle events.
+     */
+    targetDetectorSysname?: string;
+    /**
+     * Enables automatic detector throttling on hard risk breaches.
+     */
+    autoThrottleDetectors?: boolean;
 }
 
 /**
